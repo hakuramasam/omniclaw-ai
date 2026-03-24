@@ -1,24 +1,18 @@
-import express from "express"
-import cors from "cors"
 import dotenv from "dotenv"
+import { app, initServices } from "./app"
+import { config } from "./config"
 
 dotenv.config()
 
-const app = express()
+async function start() {
+  await initServices()
 
-app.use(cors())
-app.use(express.json())
+  app.listen(config.port, () => {
+    console.log("OmniClaw backend running on port " + config.port)
+  })
+}
 
-app.get("/health",(req,res)=>{ 
-
- res.json({
-  status:"OmniClaw running"
- })
-
-})
-
-app.listen(process.env.PORT || 3001,()=>{
-
- console.log("Server running")
-
+start().catch((error) => {
+  console.error("Failed to start server", error)
+  process.exit(1)
 })

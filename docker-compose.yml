@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: kai-postgres
+    environment:
+      POSTGRES_USER: kai
+      POSTGRES_PASSWORD: kai
+      POSTGRES_DB: kai_agent
+    ports:
+      - "5432:5432"
+    volumes:
+      - kai_postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: kai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - kai_redis_data:/data
+
+volumes:
+  kai_postgres_data:
+  kai_redis_data:
